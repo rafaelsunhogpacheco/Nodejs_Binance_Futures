@@ -12,16 +12,17 @@ ws.onmessage = async (event) => {
     console.log('Symbol: ' + obj.s);
     console.log('Mark Price: ' + obj.p);
 
-    const price = parseFloat(obj.a);
+    const price = parseFloat(obj.p);
 
-    if (price < 26100 && !isOpened) {
-        console.log('Comprar');
-        newOrder('BTCUSDT', '0.001', 'BUY');
+    // SHORT
+    if (price <= 19400 && !isOpened) {
+        console.log('Vender');
+       //newOrder('BTCUSDT', '0.001', 'SELL');
         isOpened = true;
     }
-    else if ( price > 26170 && isOpened) {
-        console.log('Vender');
-        newOrder('BTCUSDT', '0.001', 'SELL');
+    else if (price < 19100 && isOpened) {
+        console.log('Comprar');
+        //newOrder('BTCUSDT', '0.001', 'BUY');
         isOpened = false;
     }
 }
