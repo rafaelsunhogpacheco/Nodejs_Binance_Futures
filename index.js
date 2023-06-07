@@ -15,14 +15,14 @@ ws.onmessage = async (event) => {
     const price = parseFloat(obj.p);
 
     // SHORT
-    if (price <= 19400 && !isOpened) {
+    if (price < 26800 && !isOpened) {
         console.log('Vender');
-       //newOrder('BTCUSDT', '0.001', 'SELL');
+        newOrder('BTCUSDT', '0.001', 'SELL');
         isOpened = true;
     }
-    else if (price < 19100 && isOpened) {
+    else if (price <= 26300 && isOpened) {
         console.log('Comprar');
-        //newOrder('BTCUSDT', '0.001', 'BUY');
+        newOrder('BTCUSDT', '0.001', 'BUY');
         isOpened = false;
     }
 }
@@ -40,7 +40,7 @@ async function newOrder(symbol, quantity, side){
 
     const result = await axios({
         method:'POST',
-        url: process.env.API_URL + '/v3/order?' + new URLSearchParams(data),
+        url: process.env.API_URL + '/v1/order?' + new URLSearchParams(data),
         headers: {'X-MBX-APIKEY': process.env.API_KEY}
     })
     console.log(result.data);
