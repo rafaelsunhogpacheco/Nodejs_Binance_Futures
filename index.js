@@ -3,14 +3,14 @@ const WebSocket = require('ws');
 const axios = require('axios');
 const crypto = require('crypto');
 
-const ws = new WebSocket(process.env.STREAM_URL + 'btcusdt@bookTicker')
+const ws = new WebSocket(process.env.STREAM_URL + 'btcusdt@markPrice@1s')
 
 let isOpened = false;
 
 ws.onmessage = async (event) => {
     const obj = JSON.parse(event.data);
     console.log('Symbol: ' + obj.s);
-    console.log('Price: ' + obj.a);
+    console.log('Mark Price: ' + obj.p);
 
     const price = parseFloat(obj.a);
 
@@ -19,7 +19,7 @@ ws.onmessage = async (event) => {
         newOrder('BTCUSDT', '0.001', 'BUY');
         isOpened = true;
     }
-    else if ( price > 261700 && isOpened) {
+    else if ( price > 26170 && isOpened) {
         console.log('Vender');
         newOrder('BTCUSDT', '0.001', 'SELL');
         isOpened = false;
